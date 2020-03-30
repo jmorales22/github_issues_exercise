@@ -19,33 +19,23 @@ class IssueList extends Component {
         issue: issue
       });
     }
-
-    verifyIssue(issue) {
+  
+    render() {
+        let issueArray = this.state.issue;
+        
         return (
-          <ul className="Issue">
-            {issue.length > 0 ? (
-              issue.map(issue => (
-                <li className="Issue" key={issue.user.id}>
+          <ul className="IssueListMap">
+            {issueArray.length > 0 ? (
+              issueArray.map(issue => (
+                <li className="IssueListLi" key={issue.node_id}>
                   <Issue issue={issue} />
                 </li>
               ))
             ) : (
-              <li>Missing User Data</li>
+              <li>No Issue Data</li>
             )}
           </ul>
         );
-      };
-    
-  
-    render() {
-      const { issue } = this.state;
-      console.log("issue data", issue)
-      return (
-        <div className="IssueList">
-          <Issue issue={ issue } />
-        </div>
-      );
+      }
     }
-  }
-  
   export default IssueList;
