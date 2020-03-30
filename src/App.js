@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import IssueList from './components/issueList';
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <header className="App-header">
         <h1>GitHub Issue List</h1>
       </header>
+      <IssueList />
     </div>
   );
 }

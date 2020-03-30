@@ -1,40 +1,48 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import Issue from './issue';
 
 class IssueList extends Component {
     state = {
-      userData: [],
-      title: 'Randos'
+      issue: [],
     };
   
-    loadData = async () => {
-      const response = await fetch('https://randomuser.me/api/?results=6');
+    async getData() {
+      const response = await fetch('https://api.github.com/repos/facebook/create-react-app/issues');
       const data = await response.json();
-      return data.results;
+      return data;
     };
-  
-    handleClick = async () => {
-      const newUserData = await this.loadData();
-  
-      this.setState({
-        userData: newUserData
-      });
-    };
-  
+
     async componentDidMount() {
-      const userData = await this.loadData();
+      const issue = await this.getData();
   
       this.setState({
-        userData: userData
+        issue: issue
       });
     }
+
+    verifyIssue(issue) {
+        return (
+          <ul className="Issue">
+            {issue.length > 0 ? (
+              issue.map(issue => (
+                <li className="Issue" key={issue.user.id}>
+                  <Issue issue={issue} />
+                </li>
+              ))
+            ) : (
+              <li>Missing User Data</li>
+            )}
+          </ul>
+        );
+      };
+    
   
     render() {
-      const { title, userData } = this.state;
+      const { issue } = this.state;
+      console.log("issue data", issue)
       return (
-        <div className="App">
-          <h1>{title}</h1>
-          <button onClick={this.handleClick}>Load New People</button>
-          <ProfileCardList userData={userData} />
+        <div className="IssueList">
+          <Issue issue={ issue } />
         </div>
       );
     }
